@@ -1,7 +1,5 @@
-/assets
-/bin
+.idea
 /gen
-.classpath
-.project
-*.properties
-.settings
+/out
+*.iml
+

@@ -1,7 +1,7 @@
 package za.co.prescient.activity;
 
-import java.io.IOException;
-
+import android.os.StrictMode;
+import android.util.Base64;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -9,14 +9,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.os.StrictMode;
-import android.util.Base64;
+import java.io.IOException;
 
 public class ServiceInvoker {
 	
 	private static String authenticationToken ;
 	
-	private static final String serviceLocation = "http://192.168.0.116:8080" ;
+	private static final String serviceLocation = "http://10.0.0.14:8080" ;
 	
 	
 	public static String getUser(String userName, String password) throws ClientProtocolException, IOException {
