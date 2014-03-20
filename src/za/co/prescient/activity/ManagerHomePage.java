@@ -43,7 +43,7 @@ public class ManagerHomePage extends Activity {
 			public void onClick(View arg0) {
 //				Intent intent = new Intent(context, LoginPage.class);
 //				startActivity(intent);
-				Toast.makeText(context, "Work in progress", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "Work in progress to show guest list", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
