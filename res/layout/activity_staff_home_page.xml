@@ -36,6 +36,26 @@
         android:textSize="15sp"
         android:layout_gravity="center"
         android:gravity="center" />
+
+    <Button
+            android:id="@+id/find_guest"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Find Guest"
+            android:layout_gravity="center"/>
+    <Button
+            android:id="@+id/display_guest"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Display Guest List"
+            android:layout_gravity="center"/>
+    <Button
+            android:id="@+id/touchpoints"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Display Touch Points"
+            android:layout_gravity="center"/>
+
     
     <Button
         android:id="@+id/logout_btn"

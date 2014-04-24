@@ -15,7 +15,7 @@ public class ServiceInvoker {
 	
 	private static String authenticationToken ;
 	
-	private static final String serviceLocation = "http://10.0.0.14:8080" ;
+	private static final String serviceLocation = "http://192.168.0.116:8080" ;
 	
 	
 	public static String getUser(String userName, String password) throws ClientProtocolException, IOException {
@@ -24,7 +24,7 @@ public class ServiceInvoker {
 		StrictMode.setThreadPolicy(policy);
 		authenticationToken = Base64.encodeToString((userName+":"+password).getBytes(), Base64.NO_WRAP);
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(serviceLocation + "/service/user/"+userName);
+		HttpGet httpGet = new HttpGet(serviceLocation + "/api/users/"+userName+"/login");
 		httpGet.setHeader("Authorization", "Basic " + authenticationToken);
 	    ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String response = httpClient.execute(httpGet, responseHandler);

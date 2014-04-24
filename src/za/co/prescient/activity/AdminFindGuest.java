@@ -26,7 +26,7 @@ public class AdminFindGuest extends Activity {
  
 		final Context context = this;
 		
-		button = (Button) findViewById(R.id.button6);
+	    button = (Button) findViewById(R.id.button6);
 		button.setEnabled(false);
 		button = (Button) findViewById(R.id.button7);
 		button.setEnabled(false);
@@ -35,17 +35,17 @@ public class AdminFindGuest extends Activity {
  
 //		button = (Button) findViewById(R.id.logout);
 		button.setOnClickListener(new OnClickListener() {
- 
+
 			@Override
 			public void onClick(View arg0) {
- 
+
 			    Intent intent = new Intent(context, LoginPage.class);
-                            startActivity(intent);   
- 
+                            startActivity(intent);
+
 			}
- 
+
 		});
-		
+
 	}
 
 }
