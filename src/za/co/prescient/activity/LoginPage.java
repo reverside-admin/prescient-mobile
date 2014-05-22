@@ -53,7 +53,6 @@ public class LoginPage extends Activity {
 				String response = ServiceInvoker.getUser(userName, password);
 //				Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 				Log.i("Response from Servece :", response);
-
                 //create a session and store the user name in the session
                 session.createSession(userName,password);
 
