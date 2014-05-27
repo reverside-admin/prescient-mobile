@@ -6,6 +6,7 @@
     android:background="@drawable/login_screen"    
     >
     <TextView
+        android:id="@+id/prescient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/prescient_name"        
@@ -14,6 +15,7 @@
         android:gravity="center" />
     
     <TextView
+        android:id="@+id/application_name1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/guest_recognition_system"        
@@ -22,6 +24,7 @@
         android:gravity="center" />
     
     <TextView
+        android:id="@+id/user_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/role_manager"        
@@ -39,11 +42,18 @@
     
     <Button
         android:id="@+id/findGuest"
-        android:layout_width="350px"
+        android:layout_width="150px"
         android:layout_height="wrap_content"
         android:text="Find Guest"
         android:layout_gravity="center"
-        android:layout_marginTop="200px"
-            android:onClick="onFindGuestClick"/>
+        android:layout_marginTop="400px"/>
+
+
+    <Button
+            android:id="@+id/guest_list"
+            android:layout_width="150px"
+            android:layout_height="wrap_content"
+            android:text="Display Guest"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

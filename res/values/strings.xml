@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Prescient</string>    
+    <string name="app_name">
+
+    </string>
     <string name="action_settings">Settings</string>
     <string name="start_btn_text">Start</string>
     <string name="welcome_to_prescient">Welcome To Prescient</string>
-    <string name="prescient_name">PRESCIENT</string>
-    <string name="guest_recognition_system">Guest Recognition System</string>
+    <string name="prescient_name">
+        <![CDATA[ <b><font color=#0000ff>PRE</b><b><font color=#ff0000>S</b><b><font color=#0000ff>CIENT</b>]]>
+
+    </string>
+    <string name="guest_recognition_system">Guest Recognition System </string>
     <string name="logout">Log Out</string>
     <string name="role_admin">Admin</string>
     <string name="role_manager">Manager</string>

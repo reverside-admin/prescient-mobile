@@ -10,13 +10,14 @@
         android:id="@+id/prescient_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/prescient_name"        
+        android:text="@string/prescient_name"
         android:textSize="45sp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textColor="@color/opaque_red"
          />
     <TextView
-        android:id="@+id/guest_recognition_system_tv"
+        android:id="@+id/guest_recognition_system_tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/guest_recognition_system"        
@@ -24,34 +25,37 @@
         android:layout_gravity="center"
         android:gravity="center"
          />
-    
+
+
+
 
     <EditText
-        android:id="@+id/enter_userid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter User ID"
-        android:width="200px"
-        android:inputType="text"        
-        android:layout_gravity="center"
-        android:layout_marginTop="280px"
-        />
-    
+            android:id="@+id/enter_userid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter User ID"
+            android:width="200px"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_marginTop="280px"
+            />
+
     <EditText
-        android:id="@+id/enter_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:hint="Enter Password"
-        android:width="200px"
-        android:inputType="textPassword"
-        android:layout_gravity="center"
-        />
+            android:id="@+id/enter_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:width="200px"
+            android:inputType="textPassword"
+            android:layout_gravity="center"
+            />
     <Button
-        android:id="@+id/login_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login" 
-        android:layout_gravity="center"
-        android:onClick="onLoginClick" />
+            android:id="@+id/login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_gravity="center"
+            android:onClick="onLoginClick" />
+    
 
 </LinearLayout>
