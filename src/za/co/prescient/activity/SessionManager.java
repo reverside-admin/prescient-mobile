@@ -50,6 +50,11 @@ public class SessionManager {
         return pref.getString("authenticationToken", null);
     }
 
+    public void setAuthenticationToken(String name,String password) {
+        createSession(name,password);
+
+    }
+
 
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);

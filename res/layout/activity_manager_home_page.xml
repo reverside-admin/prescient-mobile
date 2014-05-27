@@ -46,7 +46,14 @@
         android:layout_height="wrap_content"
         android:text="Find Guest"
         android:layout_gravity="center"
-        android:layout_marginTop="400px"
-        android:onClick="onFindGuestClick"/>
+        android:layout_marginTop="400px"/>
+
+
+    <Button
+            android:id="@+id/guest_list"
+            android:layout_width="150px"
+            android:layout_height="wrap_content"
+            android:text="Display Guest"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

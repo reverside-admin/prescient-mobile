@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
+
+
+        <TableRow
+                android:id="@+id/tableTitle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal">
+            <TextView
+                    android:id="@+id/titleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:textSize="22dp"
+                    android:text="All Guests"
+                    android:gravity="center"
+                    android:layout_span="2"></TextView>
+
+        </TableRow>
+
+        <TableRow
+                android:id="@+id/tableHeader"
+                android:layout_height="wrap_content"
+                android:layout_width="100dp">
+        </TableRow>
+
+
+    </TableLayout>
+
+
+    <ListView
+            android:id="@+id/listview"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center">
+
+
+    </ListView>
+
+</LinearLayout>

@@ -58,6 +58,12 @@
                 android:name="za.co.prescient.activity.ViewCurrentSetup"/>
         <activity android:name=".activity.OptionMenu"/>
         <activity android:name=".activity.DrawImage"/>
+        <activity android:name=".activity.ChangePassword"/>
+        <activity android:name=".activity.ViewTouchPointList"/>
+        <activity android:name=".activity.GuestListView"/>
+        <activity android:name=".activity.ViewGuestListAdapter"/>
+        <activity android:name=".activity.ViewGuestListAdapter"/>
+        <activity android:name=".activity.ViewGuestList"/>
 
         <service android:name=".activity.MyService" />
     </application>

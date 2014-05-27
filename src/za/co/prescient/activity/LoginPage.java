@@ -56,6 +56,9 @@ public class LoginPage extends Activity {
                 //create a session and store the user name in the session
                 session.createSession(userName,password);
 
+
+
+
 				JSONObject jObj = new JSONObject(response);
 				JSONObject ut = (JSONObject) jObj.get("userType");
 				JSONObject us = (JSONObject) jObj.get("userStatus");
@@ -65,9 +68,15 @@ public class LoginPage extends Activity {
 				String status = us.getString("value");
 				Log.i("Status : ", status);
 
-
+                if(password.equals("password"))
+                {
+                    Intent intent=new Intent(context,ChangePassword.class);
+                    intent.putExtra("name",userName);
+                    intent.putExtra("role",role);
+                    startActivity(intent);
+                }
 				
-				if (role.equals("ROLE_ADMIN")) {
+				else if (role.equals("ROLE_ADMIN")) {
 					Intent intent = new Intent(context, AdminHomePage.class);
 					intent.putExtra("name", jObj.getString("userName"));
 //                    intent.putExtra("id", jObj.getString("id"));
@@ -95,4 +104,15 @@ public class LoginPage extends Activity {
 					Toast.LENGTH_LONG).show();
 		}
 	}
+
+
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+        // if you want to make the back button behave normally call:: super.onBackPressed();
+        Log.i("Back", "pressed");
+
+    }
+
+
 }
