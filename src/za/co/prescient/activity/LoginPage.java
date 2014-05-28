@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONObject;
 import za.co.prescient.R;
+import za.co.prescient.activity.model.Guest;
 
 // TODO : Manipulate response and load corresponding activity according to role
 public class LoginPage extends Activity {
@@ -53,9 +54,17 @@ public class LoginPage extends Activity {
 				String response = ServiceInvoker.getUser(userName, password);
 //				Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 				Log.i("Response from Servece :", response);
+
+                JSONObject jsonObj = new JSONObject(response);
+                JSONObject hotel = (JSONObject) jsonObj.get("hotel");
+                Long hotelId = hotel.getLong("id");
+
+                Guest guest = new Guest(hotelId);
+
                 //create a session and store the user name in the session
                 session.createSession(userName,password);
 
+                ApplicationData.guest = guest;
 
 
 

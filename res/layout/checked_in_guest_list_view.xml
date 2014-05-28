@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+            android:id="@+id/FirstCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="First"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/SecondCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Second"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/ThirdCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Third"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/FourthCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Fourth"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/FifthCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Fifth"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/SixthCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Sixth"
+            android:layout_weight="1">
+    </TextView>
+
+
+</LinearLayout>

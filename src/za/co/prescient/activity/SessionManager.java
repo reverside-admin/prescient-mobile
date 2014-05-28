@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Base64;
-import android.util.Log;
 
 public class SessionManager {
 
     SharedPreferences pref;
     Editor editor;
     Context context;
+//    Guest guest;
 
     private static final String IS_LOGIN = "IsLoggedIn";
     public static final String KEY_NAME = "name";
@@ -65,4 +65,11 @@ public class SessionManager {
         editor.clear();
         editor.commit();
     }
+
+//    public void setGuest(Guest guest){
+//        this.guest = guest;
+//    }
+//    public Guest getGuest(){
+//        return this.guest;
+//    }
 }

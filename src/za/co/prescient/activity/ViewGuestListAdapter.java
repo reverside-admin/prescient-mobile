@@ -10,11 +10,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import org.json.JSONObject;
 import za.co.prescient.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,15 +93,14 @@ public class ViewGuestListAdapter extends BaseAdapter {
         holder.txtSecond.setText((String) map.get(SECOND_COLUMN));
         holder.txtThird.setText((String) map.get(THIRD_COLUMN));
         holder.txtFourth.setText((String) map.get(FOURTH_COLUMN));
-        // holder.txtFifth.setText((String)map.get(FIFTH_COLUMN));
 
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    Log.i("hello", "ID is::" + list.get(pos).get(FIFTH_COLUMN));
-                    Long guestId = (Long) list.get(pos).get(FIFTH_COLUMN);
+                    Log.i("hello", "ID is::" + list.get(pos).get(ID_COLUMN));
+                    Long guestId = (Long) list.get(pos).get(ID_COLUMN);
                     String response = ServiceInvoker.getGuestDetailByGuestId(session.getToken(), guestId);
                     // Toast.makeText(context, "Guest Detail:: " + response, Toast.LENGTH_SHORT).show();
                     //Log.i("guest detail::", response);

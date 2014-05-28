@@ -16,7 +16,7 @@ public class ServiceInvoker {
 
     private static String authenticationToken;
 
-    private static final String serviceLocation = "http://192.168.1.101:8080";
+    private static final String serviceLocation = "http://192.168.1.102:8080";
 
 
     public static String getUser(String userName, String password) throws ClientProtocolException, IOException {
@@ -149,5 +149,19 @@ public class ServiceInvoker {
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
         String response = httpClient.execute(httpGet, responseHandler);
         return response;
+    }
+
+    public static String getCheckedInGuests(String authenticationToken, Long hotelId) throws ClientProtocolException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(serviceLocation + "/api/hotels/" + hotelId + "/guests/checkedIn");
+        httpGet.setHeader("Authorization", "Basic " + authenticationToken);
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        String response = httpClient.execute(httpGet, responseHandler);
+        return response;
+
     }
 }

@@ -64,9 +64,6 @@ public class ManagerHomePage extends Activity {
             }
         });
 
-
-
-
         Button button=(Button)findViewById(R.id.guest_list);
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -74,8 +71,46 @@ public class ManagerHomePage extends Activity {
                 onDisplayTouchPointList();
             }
         });
+
+        Button findAGuest=(Button)findViewById(R.id.findAGuest);
+        findAGuest.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFindAGuestClick();
+            }
+        });
     }
 
+    private void onFindAGuestClick() {
+        System.out.println("Service Invoked");
+        System.out.println("session.getGuest() : " + ApplicationData.guest.getHotelId());
+
+        Context context = getApplicationContext();
+
+        Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
+        try {
+            String responseData = ServiceInvoker.getCheckedInGuests(session.getToken(), ApplicationData.guest.getHotelId());
+//            Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), responseData, Toast.LENGTH_SHORT).show();
+
+            Log.i("responseData : " , responseData);
+
+            JSONArray jsonArray = new JSONArray(responseData);
+            Log.i("responseData array length::", "" + jsonArray.length());
+
+            Intent intent = new Intent(getApplicationContext(), ViewCheckedInGuestList.class);
+            Bundle b=new Bundle();
+            b.putString("checkedInGuests",jsonArray.toString());
+            intent.putExtras(b);
+            startActivity(intent);
+
+
+
+        } catch (Exception e) {
+            Log.i("exception in findAGuest", e.getMessage());
+        }
+
+    }
 
 
     public void onDisplayTouchPointList()
@@ -139,11 +174,6 @@ public class ManagerHomePage extends Activity {
     public void onFindGuestClick() {
         Context context = getApplicationContext();
 
-//        findViewById(R.id.findGuest).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Toast.makeText(getApplicationContext(), "Work In Progress to find a guest", Toast.LENGTH_SHORT).show();
-//                String response = ServiceInvoker.getDepartments(password);
                 try {
                     String data = ServiceInvoker.getAllAssignedTouchPoint(session.getToken());
                     // Toast.makeText(getApplicationContext(), "DATA:: " + data, Toast.LENGTH_SHORT).show();

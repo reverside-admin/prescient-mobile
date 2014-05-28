@@ -42,18 +42,25 @@
     
     <Button
         android:id="@+id/findGuest"
-        android:layout_width="150px"
+        android:layout_width="350px"
         android:layout_height="wrap_content"
-        android:text="Find Guest"
+        android:text="Find Guests on Layout"
         android:layout_gravity="center"
-        android:layout_marginTop="400px"/>
+        android:layout_marginTop="350px"/>
 
 
     <Button
             android:id="@+id/guest_list"
-            android:layout_width="150px"
+            android:layout_width="350px"
             android:layout_height="wrap_content"
-            android:text="Display Guest"
+            android:text="Display Guest List"
+            android:layout_gravity="center"/>
+
+    <Button
+            android:id="@+id/findAGuest"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Find A Guest"
             android:layout_gravity="center"/>
 
 </LinearLayout>
