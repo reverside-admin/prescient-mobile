@@ -56,7 +56,7 @@ public class ManagerHomePage extends Activity {
 
         //Add Listener to Button
 
-        Button findGuest=(Button)findViewById(R.id.findGuest);
+        Button findGuest = (Button) findViewById(R.id.findGuest);
         findGuest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class ManagerHomePage extends Activity {
             }
         });
 
-        Button button=(Button)findViewById(R.id.guest_list);
+        Button button = (Button) findViewById(R.id.guest_list);
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class ManagerHomePage extends Activity {
             }
         });
 
-        Button findAGuest=(Button)findViewById(R.id.findAGuest);
+        Button findAGuest = (Button) findViewById(R.id.findAGuest);
         findAGuest.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,20 +90,19 @@ public class ManagerHomePage extends Activity {
         Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
         try {
             String responseData = ServiceInvoker.getCheckedInGuests(session.getToken(), ApplicationData.guest.getHotelId());
-//            Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), responseData, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), responseData, Toast.LENGTH_SHORT).show();
 
-            Log.i("responseData : " , responseData);
+            Log.i("responseData : ", responseData);
 
             JSONArray jsonArray = new JSONArray(responseData);
             Log.i("responseData array length::", "" + jsonArray.length());
 
             Intent intent = new Intent(getApplicationContext(), ViewCheckedInGuestList.class);
-            Bundle b=new Bundle();
-            b.putString("checkedInGuests",jsonArray.toString());
+            Bundle b = new Bundle();
+            b.putString("checkedInGuests", jsonArray.toString());
             intent.putExtras(b);
             startActivity(intent);
-
 
 
         } catch (Exception e) {
@@ -113,9 +112,8 @@ public class ManagerHomePage extends Activity {
     }
 
 
-    public void onDisplayTouchPointList()
-    {
-        Log.i("Display guest list::","clicked");
+    public void onDisplayTouchPointList() {
+        Log.i("Display guest list::", "clicked");
         try {
             String data = ServiceInvoker.getAllAssignedTouchPoint(session.getToken());
             // Toast.makeText(getApplicationContext(), "DATA:: " + data, Toast.LENGTH_SHORT).show();
@@ -174,35 +172,35 @@ public class ManagerHomePage extends Activity {
     public void onFindGuestClick() {
         Context context = getApplicationContext();
 
-                try {
-                    String data = ServiceInvoker.getAllAssignedTouchPoint(session.getToken());
-                    // Toast.makeText(getApplicationContext(), "DATA:: " + data, Toast.LENGTH_SHORT).show();
-                    Log.i("JSON DATA::", data);
+        try {
+            String data = ServiceInvoker.getAllAssignedTouchPoint(session.getToken());
+            // Toast.makeText(getApplicationContext(), "DATA:: " + data, Toast.LENGTH_SHORT).show();
+            Log.i("JSON DATA::", data);
 
 
-                    List<TouchPoint> touchPointList = new ArrayList<TouchPoint>();
-                    JSONArray touchPointArray = new JSONArray(data);
+            List<TouchPoint> touchPointList = new ArrayList<TouchPoint>();
+            JSONArray touchPointArray = new JSONArray(data);
 
-                    for (int i = 0; i < touchPointArray.length(); i++) {
-                        JSONObject obj = (JSONObject) touchPointArray.get(i);
-                        TouchPoint touchPoint = new TouchPoint();
-                        touchPoint.setId(obj.getLong("id"));
-                        touchPoint.setName(obj.getString("name"));
+            for (int i = 0; i < touchPointArray.length(); i++) {
+                JSONObject obj = (JSONObject) touchPointArray.get(i);
+                TouchPoint touchPoint = new TouchPoint();
+                touchPoint.setId(obj.getLong("id"));
+                touchPoint.setName(obj.getString("name"));
 
-                        touchPointList.add(touchPoint);
-                    }
-                    Log.i("ALL TP OBJECTS::", touchPointList.toString());
-                    //set the touchpointList in Application data
-                    ApplicationData.touchPointList = touchPointList;
-
-                    Intent intent = new Intent(getApplicationContext(), ListViewActivity.class);
-                    startActivity(intent);
-
-                } catch (Exception e) {
-                    Log.i("exception", e.getMessage());
-                }
+                touchPointList.add(touchPoint);
             }
-       // });
+            Log.i("ALL TP OBJECTS::", touchPointList.toString());
+            //set the touchpointList in Application data
+            ApplicationData.touchPointList = touchPointList;
+
+            Intent intent = new Intent(getApplicationContext(), ListViewActivity.class);
+            startActivity(intent);
+
+        } catch (Exception e) {
+            Log.i("exception", e.getMessage());
+        }
+    }
+    // });
     //}
 
     //logout

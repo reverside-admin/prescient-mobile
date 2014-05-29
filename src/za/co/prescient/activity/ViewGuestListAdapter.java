@@ -30,6 +30,8 @@ public class ViewGuestListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater1;
 
+    public ViewGuestListAdapter(){}
+
     public ViewGuestListAdapter(Activity activity, ArrayList<HashMap> list) {
         super();
         this.activity = activity;
@@ -52,6 +54,10 @@ public class ViewGuestListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    public void addItem(HashMap map) {
+        list.add(map);
     }
 
     private class ViewHolder {

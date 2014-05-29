@@ -1,10 +1,14 @@
 package za.co.prescient.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -140,4 +144,37 @@ public class ViewCheckedInGuestList extends Activity {
             Log.i("EXP in List", ee.getMessage());
         }
     }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.opt1:
+                logOut();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void logOut() {
+        session.logOut();
+
+        Log.i("Manager Login status after logout::", Boolean.toString(session.isLoggedIn()));
+        Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+        startActivity(intent);
+    }
+
+
 }

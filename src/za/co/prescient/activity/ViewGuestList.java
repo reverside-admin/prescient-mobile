@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +21,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static za.co.prescient.activity.model.Constant.*;
+import static za.co.prescient.activity.model.Constant.SECOND_COLUMN;
 
 public class ViewGuestList extends Activity {
     private ArrayList<HashMap> list;
     ViewGuestListAdapter adapter;
     SessionManager session;
+    ListView lview;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +38,69 @@ public class ViewGuestList extends Activity {
         Log.i("check", "checking the session");
         session.checkSession();
 
-        ListView lview = (ListView) findViewById(R.id.listview);
+        TableRow tableSearchRow=(TableRow)findViewById(R.id.tableSearchRow);
+        tableSearchRow.setBackgroundColor(Color.DKGRAY);
+        lview = (ListView) findViewById(R.id.listview);
+        populateHeader();
         populateList();
-        adapter = new ViewGuestListAdapter(this, list);
+        //adapter = new ViewGuestListAdapter(this, list);
+        //lview.setAdapter(adapter);
+
+
+        final EditText editText = (EditText) findViewById(R.id.edSearch);
+        editText.setBackgroundColor(Color.WHITE);
+        Button searchButton = (Button) findViewById(R.id.btnSearch);
+
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                Log.i(" search status::", "Text changed");
+                String searchText = editText.getText().toString();
+                if (searchText.length() == 0) {
+                    populateList();
+                } else {
+                    search(searchText);
+                }
+
+            }
+        });
+    }
+
+
+    public void search(String text) {
+        ArrayList<HashMap> hashMapsList = new ArrayList<HashMap>();
+        for (HashMap map : list) {
+
+            String title=(String)map.get(FIRST_COLUMN);
+            String firstName = (String) map.get(SECOND_COLUMN);
+            String surName = (String) map.get(THIRD_COLUMN);
+            String preferredName = (String) map.get(FOURTH_COLUMN);
+
+            String rowData=title+firstName+surName+preferredName;
+            if (rowData.toLowerCase().contains(text.toLowerCase())) {
+                hashMapsList.add(map);
+                //hashMapsList.add(map);
+               // hashMapsList.add(map);
+            }
+        }
+        adapter = new ViewGuestListAdapter(this, hashMapsList);
         lview.setAdapter(adapter);
     }
 
 
-    private void populateList() {
+    private void populateHeader() {
         TableRow tbr = (TableRow) findViewById(R.id.tableHeader);
         TextView textView = new TextView(this);
         textView.setText("TITLE");
@@ -72,14 +131,13 @@ public class ViewGuestList extends Activity {
         textView.setTextColor(Color.WHITE);
         tbr.addView(textView);
         tbr.setBackgroundColor(Color.RED);
+    }
 
-
+    private void populateList() {
         try {
             Bundle b = getIntent().getExtras();
             String guests = b.getString("guests");
             JSONArray jsonArray = new JSONArray(guests);
-
-            // Toast.makeText(getApplicationContext(), "DATA:: " + guests, Toast.LENGTH_SHORT).show();
 
             list = new ArrayList<HashMap>();
             HashMap temp;
@@ -92,11 +150,6 @@ public class ViewGuestList extends Activity {
                 String surName = obj.getString("surname");
                 String preferredName = obj.getString("preferredName");
                 Long id = obj.getLong("id");
-                /*String gender=obj.getString("gender");
-                String nationality=obj.getString("nationalityId");
-                Long dateTimeMill=obj.getLong("dob");
-                Date date=new Date(dateTimeMill);*/
-
 
                 temp = new HashMap();
                 temp.put(FIRST_COLUMN, title);
@@ -104,14 +157,11 @@ public class ViewGuestList extends Activity {
                 temp.put(THIRD_COLUMN, surName);
                 temp.put(FOURTH_COLUMN, preferredName);
                 temp.put(ID_COLUMN, id);
-                /*temp.put(SIXTH_COLUMN,nationality);
-                temp.put(SEVENTH_COLUMN,date.toString());
-                temp.put(EIGHTH_COLUMN,nationality);
-                temp.put(NINTH_COLUMN,nationality);
-                temp.put(TENTH_COLUMN,nationality);*/
 
                 list.add(temp);
             }
+            adapter = new ViewGuestListAdapter(this, list);
+            lview.setAdapter(adapter);
         } catch (Exception ee) {
             ee.getMessage();
         }

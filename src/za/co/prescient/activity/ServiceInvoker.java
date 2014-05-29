@@ -16,7 +16,7 @@ public class ServiceInvoker {
 
     private static String authenticationToken;
 
-    private static final String serviceLocation = "http://192.168.1.102:8080";
+    private static final String serviceLocation = "http://192.168.1.101:8080";
 
 
     public static String getUser(String userName, String password) throws ClientProtocolException, IOException {
