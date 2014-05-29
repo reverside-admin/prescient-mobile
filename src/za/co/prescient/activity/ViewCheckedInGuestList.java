@@ -5,17 +5,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import za.co.prescient.R;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class ViewCheckedInGuestList extends Activity {
     private ArrayList<HashMap> list;
     ViewCheckedInGuestListAdapter adapter;
     SessionManager session;
+    ListView lview;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -39,15 +41,64 @@ public class ViewCheckedInGuestList extends Activity {
         Log.i("check", "checking the session");
         session.checkSession();
 
-        ListView lview = (ListView) findViewById(R.id.checkedInGuestView);
+        lview = (ListView) findViewById(R.id.checkedInGuestView);
+        populateHeader();
         populateList();
-        adapter = new ViewCheckedInGuestListAdapter(this, list);
-        lview.setAdapter(adapter);
+
+
+        final EditText editText = (EditText) findViewById(R.id.editTextSearch);
+        Button searchButton = (Button) findViewById(R.id.buttonSearch);
+        TableRow tableRow=(TableRow)findViewById(R.id.tableGuestSearchRow);
+        tableRow.setBackgroundColor(Color.DKGRAY);
+        editText.setBackgroundColor(Color.WHITE);
+
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchString = editText.getText().toString();
+
+                if (searchString.length() == 0) {
+                    populateList();
+                } else {
+                    search(searchString);
+                }
+
+            }
+        });
 
     }
 
-    private void populateList() {
 
+    public void search(String searchString) {
+        ArrayList<HashMap> hashMapsList = new ArrayList<HashMap>();
+
+        for (HashMap map : list) {
+             String title=(String)map.get(FIRST_COLUMN);
+            String firstName = (String) map.get(SECOND_COLUMN);
+            String surName = (String) map.get(THIRD_COLUMN);
+            String preferredName = (String) map.get(FOURTH_COLUMN);
+            String str=title+firstName+surName+preferredName;
+
+            if (str.toLowerCase().contains(searchString.toLowerCase())) {
+                hashMapsList.add(map);
+            }
+        }
+        adapter = new ViewCheckedInGuestListAdapter(this, hashMapsList);
+        lview.setAdapter(adapter);
+    }
+
+    public void populateHeader() {
         TableRow tbr = (TableRow) findViewById(R.id.tableHeaderRow);
         TextView textView = new TextView(this);
         textView.setText("TITLE");
@@ -94,8 +145,9 @@ public class ViewCheckedInGuestList extends Activity {
         textView.setTextColor(Color.WHITE);
         tbr.addView(textView);
         tbr.setBackgroundColor(Color.RED);
+    }
 
-
+    private void populateList() {
         try {
             Bundle b = getIntent().getExtras();
             String guests = b.getString("checkedInGuests");
@@ -136,15 +188,17 @@ public class ViewCheckedInGuestList extends Activity {
                 Log.i("List size : ", "" + list.size());
 
                 System.out.println("Total List : " + list);
-                Log.i("ResultData : ", ""+list.get(i));
+                Log.i("ResultData : ", "" + list.get(i));
 
             }
+
+            adapter = new ViewCheckedInGuestListAdapter(this, list);
+            lview.setAdapter(adapter);
         } catch (Exception ee) {
             ee.getMessage();
             Log.i("EXP in List", ee.getMessage());
         }
     }
-
 
 
     @Override

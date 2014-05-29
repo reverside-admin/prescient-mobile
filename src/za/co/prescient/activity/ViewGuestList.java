@@ -38,7 +38,7 @@ public class ViewGuestList extends Activity {
         Log.i("check", "checking the session");
         session.checkSession();
 
-        TableRow tableSearchRow=(TableRow)findViewById(R.id.tableSearchRow);
+        TableRow tableSearchRow = (TableRow) findViewById(R.id.tableSearchRow);
         tableSearchRow.setBackgroundColor(Color.DKGRAY);
         lview = (ListView) findViewById(R.id.listview);
         populateHeader();
@@ -83,16 +83,14 @@ public class ViewGuestList extends Activity {
         ArrayList<HashMap> hashMapsList = new ArrayList<HashMap>();
         for (HashMap map : list) {
 
-            String title=(String)map.get(FIRST_COLUMN);
+            String title = (String) map.get(FIRST_COLUMN);
             String firstName = (String) map.get(SECOND_COLUMN);
             String surName = (String) map.get(THIRD_COLUMN);
             String preferredName = (String) map.get(FOURTH_COLUMN);
 
-            String rowData=title+firstName+surName+preferredName;
+            String rowData = title + firstName + surName + preferredName;
             if (rowData.toLowerCase().contains(text.toLowerCase())) {
                 hashMapsList.add(map);
-                //hashMapsList.add(map);
-               // hashMapsList.add(map);
             }
         }
         adapter = new ViewGuestListAdapter(this, hashMapsList);
