@@ -43,7 +43,7 @@
             android:layout_width="300px"
             android:layout_marginTop="300px"
             android:layout_height="wrap_content"
-            android:text="Find Guest"
+            android:text="Find Guests on Layout"
             android:layout_gravity="center"
             />
     <Button
@@ -53,10 +53,10 @@
             android:text="Display Guest List"
             android:layout_gravity="center"/>
     <Button
-            android:id="@+id/touchpoints"
+            android:id="@+id/findcheckedinguests"
             android:layout_width="300px"
             android:layout_height="wrap_content"
-            android:text="Display Touch Points"
+            android:text="Find A Guest"
             android:layout_gravity="center"/>
 
     

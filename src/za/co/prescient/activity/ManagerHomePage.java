@@ -90,9 +90,6 @@ public class ManagerHomePage extends Activity {
         Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
         try {
             String responseData = ServiceInvoker.getCheckedInGuests(session.getToken(), ApplicationData.guest.getHotelId());
-            //Toast.makeText(getApplicationContext(), "HOTEL: " + ApplicationData.guest.getHotelId(), Toast.LENGTH_SHORT).show();
-            // Toast.makeText(getApplicationContext(), responseData, Toast.LENGTH_SHORT).show();
-
             Log.i("responseData : ", responseData);
 
             JSONArray jsonArray = new JSONArray(responseData);
@@ -103,12 +100,9 @@ public class ManagerHomePage extends Activity {
             b.putString("checkedInGuests", jsonArray.toString());
             intent.putExtras(b);
             startActivity(intent);
-
-
         } catch (Exception e) {
             Log.i("exception in findAGuest", e.getMessage());
         }
-
     }
 
 
@@ -219,20 +213,4 @@ public class ManagerHomePage extends Activity {
         Log.i("Back", "pressed");
 
     }
-
-    /*public void doAction(View view) {
-        Context context = getApplicationContext();
-
-        findViewById(R.id.draw1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("Button", "clicked");
-
-                Intent intent = new Intent(getApplicationContext(), DrawImage.class);
-                startActivity(intent);
-
-            }
-        });
-    }*/
-
 }

@@ -89,8 +89,9 @@ public class ServiceInvoker {
     }
 
     //Find all guest in the selected touchpoint
-    public static String getGuestListInTouchPoint(String authenticationToken,String tagId) throws ClientProtocolException, IOException {
+    public static String getGuestListInTouchPoint(String authenticationToken, String tagId) throws ClientProtocolException, IOException {
 
+        Log.i("get guest list in touchpoint service is ", "called");
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -102,9 +103,6 @@ public class ServiceInvoker {
         return response;
 
     }
-
-
-
 
 
     //for guest  layout popup information
@@ -137,14 +135,13 @@ public class ServiceInvoker {
     }
 
 
-
     public static String getGuestDetailByGuestId(String authenticationToken, Long guestId) throws ClientProtocolException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
         HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(serviceLocation + "/api/guest/"+guestId);
+        HttpGet httpGet = new HttpGet(serviceLocation + "/api/guest/" + guestId);
         httpGet.setHeader("Authorization", "Basic " + authenticationToken);
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
         String response = httpClient.execute(httpGet, responseHandler);

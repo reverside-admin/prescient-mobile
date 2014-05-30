@@ -44,6 +44,7 @@ public class ViewTouchPointList extends ListActivity {
         //make a web service call to get the guest list in this touchpoint
         try {
             String guestList = ServiceInvoker.getGuestListInTouchPoint(session.getToken(), ApplicationData.selectedTagId);
+
             JSONArray jsonArray = new JSONArray(guestList);
             Log.i("guestList array length::", "" + jsonArray.length());
 
