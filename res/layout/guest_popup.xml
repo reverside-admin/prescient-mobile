@@ -11,26 +11,51 @@
             android:layout_margin="1dp"
             android:background="@android:color/holo_blue_light">
         >
-        <LinearLayout
+
+        <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:layout_margin="20dp">
-            <TextView
+
+
+            <TableRow
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Guest Details"/>
-            <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
+                    android:layout_marginTop="20dp">
+
+                <ImageView
+                        android:id="@+id/birthdayImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="left"
+                        />
+
+                <TextView
+                        android:id="@+id/guestPopupHeader"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Guest Details"
+                        android:layout_gravity="center_horizontal"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
+
+                <ImageView
+                        android:id="@+id/departureImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        />
+            </TableRow>
 
             <TextView
                     android:id="@+id/guest_detail_info"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     />
 
             <Button
@@ -39,6 +64,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:text="close"/>
-        </LinearLayout>
+        </TableLayout>
     </LinearLayout>
 </LinearLayout>

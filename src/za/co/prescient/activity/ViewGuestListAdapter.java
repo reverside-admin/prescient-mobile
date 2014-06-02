@@ -10,15 +10,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.TextView;
+import android.widget.*;
 import org.json.JSONObject;
 import za.co.prescient.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -30,7 +28,8 @@ public class ViewGuestListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater1;
 
-    public ViewGuestListAdapter(){}
+    public ViewGuestListAdapter() {
+    }
 
     public ViewGuestListAdapter(Activity activity, ArrayList<HashMap> list) {
         super();
@@ -142,31 +141,19 @@ public class ViewGuestListAdapter extends BaseAdapter {
                     JSONObject jsonGuestRoomDetail = jsonGuest.getJSONObject("room");
                     String guestRoomNo = jsonGuestRoomDetail.getString("roomNumber");
 
-
-
-                   /* Toast.makeText(context, "Guest Detail:: " + guestTitle +"\n"
-                            +guestFirstName+"\n"+guestSurname+"\n"+guestNationality+"\n"+gender+"\n"+dob+"\n"+guestRoomNo+"\n"+
-                            arrivalDate+"\n"+departureDate, Toast.LENGTH_SHORT).show();
-*/
-
-
-                    String guestInfo = "\n\n Name: " + guestTitle + " " + guestFirstName + " " + guestSurname + "\n Nationality: " + guestNationality + "\n Gender: " + gender + "\n DOB: " + dobText + "\nRoom Number: " + guestRoomNo + "\nArrival Date: " + arrivalDateText + "\n Departure Date: " + departureDateText;
-                    showPopup(view, guestInfo,dobText);
+                    String guestInfo = "\n  Name: " + guestTitle + " " + guestFirstName + " " + guestSurname + "\n  Nationality: " + guestNationality + "\n  Gender: " + gender + "\n  DOB: " + dobText + "\n  Room Number: " + guestRoomNo + "\n  Arrival Date: " + arrivalDateText + "\n  Departure Date: " + departureDateText+"\n\n";
+                    showPopup(view, guestInfo, dob, departureDate);
                 } catch (Exception e) {
                     e.getMessage();
                 }
-
-
             }
         });
-
         return convertView;
     }
 
-    public void showPopup(View view, String guestInfo,String dateText) {
-        //call a service to get user detail
-        //Toast.makeText(getApplicationContext(),"popup can be shown" , Toast.LENGTH_SHORT).show();
-        // LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+    public void showPopup(View view, String guestInfo, Date dob, Date departureDate) {
+
         View popupView = inflater1.inflate(R.layout.guest_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -174,8 +161,21 @@ public class ViewGuestListAdapter extends BaseAdapter {
         Button btnDismiss = (Button) popupView.findViewById(R.id.close);
         TextView detailView = (TextView) popupView.findViewById(R.id.guest_detail_info);
 
+        //check for birth day
+        ImageView bdayImageView = (ImageView) popupView.findViewById(R.id.birthdayImage);
+        Boolean birthDayFlag = checkGuestBirthDay(dob);
+        Log.i("birth Day", birthDayFlag.toString());
 
+        ImageView departureImageView = (ImageView) popupView.findViewById(R.id.departureImage);
+        Boolean departureFlag = checkGuestDepartureDay(departureDate);
+        Log.i("departure Day", departureFlag.toString());
 
+        if (birthDayFlag) {
+            bdayImageView.setImageResource(R.drawable.birthday_image);
+        }
+        if (departureFlag) {
+            departureImageView.setImageResource(R.drawable.departure_image);
+        }
         detailView.setText(guestInfo);
         btnDismiss.setOnClickListener(new Button.OnClickListener() {
 
@@ -186,11 +186,53 @@ public class ViewGuestListAdapter extends BaseAdapter {
                 popupWindow.dismiss();
             }
         });
-
-
         // popupWindow.showAsDropDown(view,0,0);
         popupWindow.setFocusable(true);
         popupWindow.update();
+    }
+
+    public boolean checkGuestBirthDay(Date dob) {
+        //Guest Birth day
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dob);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        Log.i("month::", "" + month);
+        Log.i("day::", "" + day);
+
+
+        //Todays Date
+        Date currentDate = new Date();
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(currentDate);
+        int thisMonth = cal1.get(Calendar.MONTH);
+        int thisDay = cal1.get(Calendar.DAY_OF_MONTH);
+
+        Log.i("This month::", "" + thisMonth + "  " + currentDate.toString());
+        Log.i("This day::", "" + thisDay);
+
+
+        if ((month == thisMonth) && (day == thisDay)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public boolean checkGuestDepartureDay(Date departureDate) {
+        //Guest Departure day
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String departureDateString = sdf.format(departureDate);
+
+        String currentDateString = sdf.format(new Date());
+
+        if (departureDateString.equals(currentDateString))
+            return true;
+        else
+            return false;
 
     }
 
