@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="300dp"
+              android:layout_height="300dp">
+
+
+    <ScrollView
+            android:id="@+id/testscroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+
+        <TableLayout
+                android:id="@+id/testtable"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+            <TableRow
+                    android:id="@+id/historyTableRow"
+                    android:layout_margin="10dp"
+                    android:layout_width="fill_parent">
+            </TableRow>
+
+
+        </TableLayout>
+    </ScrollView>
+    <Button android:id="@+id/cross"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="close"
+            />
+</LinearLayout>

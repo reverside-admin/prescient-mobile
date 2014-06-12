@@ -171,6 +171,8 @@ public class ViewCheckedInGuestList extends Activity {
                 String preferredName = guestProfileObj.getString("preferredName");
                 String roomNo = roomObj.getString("roomNumber");
                 Date arrivalDate = new Date(obj.getLong("arrivalTime"));
+                //added now
+                Long id = obj.getLong("id");
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 String arrDate = sdf.format(arrivalDate);
@@ -183,6 +185,9 @@ public class ViewCheckedInGuestList extends Activity {
                 temp.put(FOURTH_COLUMN, preferredName);
                 temp.put(FIFTH_COLUMN, roomNo);
                 temp.put(SIXTH_COLUMN, arrDate);
+                //added now
+                temp.put(ID_COLUMN, id);
+
 
                 list.add(temp);
                 Log.i("List size : ", "" + list.size());

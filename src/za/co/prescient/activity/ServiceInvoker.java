@@ -121,6 +121,22 @@ public class ServiceInvoker {
     }
 
 
+//get guest image for layout popup
+    public static String getGuestImage(String authenticationToken, String imageName,String imageExtension) throws ClientProtocolException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(serviceLocation + "/api/guest/image/" + imageName + "/" + imageExtension);
+        httpGet.setHeader("Authorization", "Basic " + authenticationToken);
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        String response = httpClient.execute(httpGet, responseHandler);
+        return response;
+
+    }
+
+
     public static String getCoordinateValues(String authenticationToken, String zoneId, Integer xMax, Integer yMax) throws ClientProtocolException, IOException {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -161,4 +177,36 @@ public class ServiceInvoker {
         return response;
 
     }
+
+
+    public static String getCurrentGuestPosition(String authenticationToken, Long guestId) throws ClientProtocolException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(serviceLocation + "/api/guests/" +guestId + "/locations");
+        httpGet.setHeader("Authorization", "Basic " + authenticationToken);
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        String response = httpClient.execute(httpGet, responseHandler);
+        Log.i("get guest current position@Bibhuti",response);
+        return response;
+    }
+
+    public static String getCurrentGuestLocationHistory(String authenticationToken, Long guestId) throws ClientProtocolException, IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(serviceLocation + "/api/guests/" + guestId + "/location/history");
+        httpGet.setHeader("Authorization", "Basic " + authenticationToken);
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        String response = httpClient.execute(httpGet, responseHandler);
+        Log.i("get guest location history",response);
+        return response;
+    }
+
+
+
 }
