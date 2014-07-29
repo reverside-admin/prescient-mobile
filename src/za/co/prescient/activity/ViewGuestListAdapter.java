@@ -5,6 +5,9 @@ package za.co.prescient.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -111,6 +114,7 @@ public class ViewGuestListAdapter extends BaseAdapter {
                     //Log.i("guest detail::", response);
 
                     //parse the response to view guest detail
+                    Log.i("hello responce is",response);
 
                     JSONObject jsonGuest = new JSONObject(response);
                     JSONObject jsonGuestDetail = jsonGuest.getJSONObject("guest");
@@ -120,6 +124,7 @@ public class ViewGuestListAdapter extends BaseAdapter {
                     String guestSurname = jsonGuestDetail.getString("surname");
                     String guestNationality = jsonGuestDetail.getString("nationalityId");
                     String gender = jsonGuestDetail.getString("gender");
+                    String guestImageFilePath = jsonGuestDetail.getString("guestImagePath");
                     Long DOBInLong = jsonGuestDetail.getLong("dob");
                     Date dob = new Date(DOBInLong);
 
@@ -141,9 +146,23 @@ public class ViewGuestListAdapter extends BaseAdapter {
                     JSONObject jsonGuestRoomDetail = jsonGuest.getJSONObject("room");
                     String guestRoomNo = jsonGuestRoomDetail.getString("roomNumber");
 
-                    String guestInfo = "\n  Name: " + guestTitle + " " + guestFirstName + " " + guestSurname + "\n  Nationality: " + guestNationality + "\n  Gender: " + gender + "\n  DOB: " + dobText + "\n  Room Number: " + guestRoomNo + "\n  Arrival Date: " + arrivalDateText + "\n  Departure Date: " + departureDateText+"\n\n";
-                    showPopup(view, guestInfo, dob, departureDate);
+
+                    //get guest image and pass the image to the popup.
+                    String guestImageFileNameWithoutExtension = guestImageFilePath.substring(0, guestImageFilePath.lastIndexOf("."));
+                    String guestImageFileExtension = guestImageFilePath.substring(guestImageFilePath.lastIndexOf(".") + 1);
+
+                    Bitmap guestImageBitmap = null;
+                    String guestImage = ServiceInvoker.getGuestImage(session.getToken(), guestImageFileNameWithoutExtension.trim(), guestImageFileExtension.trim());
+                    if (guestImage.length() != 0) {
+                        byte[] bytes = Base64.decode(guestImage, Base64.DEFAULT);
+                        guestImageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    }
+
+
+                    String guestInfo = "\n  Name: " + guestTitle + " " + guestFirstName + " " + guestSurname + "\n  Nationality: " + guestNationality + "\n  Gender: " + gender + "\n  DOB: " + dobText + "\n  Room Number: " + guestRoomNo + "\n  Arrival Date: " + arrivalDateText + "\n  Departure Date: " + departureDateText + "\n\n";
+                    showPopup(view, guestInfo, dob, departureDate, guestImageBitmap);
                 } catch (Exception e) {
+                    Log.i("mistake", e.getMessage());
                     e.getMessage();
                 }
             }
@@ -152,7 +171,7 @@ public class ViewGuestListAdapter extends BaseAdapter {
     }
 
 
-    public void showPopup(View view, String guestInfo, Date dob, Date departureDate) {
+    public void showPopup(View view, String guestInfo, Date dob, Date departureDate, Bitmap guestImage) {
 
         View popupView = inflater1.inflate(R.layout.guest_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -176,6 +195,15 @@ public class ViewGuestListAdapter extends BaseAdapter {
         if (departureFlag) {
             departureImageView.setImageResource(R.drawable.departure_image);
         }
+
+        //set the guest image .
+        ImageView guestImageView = (ImageView) popupView.findViewById(R.id.guest_photo);
+         if (guestImage != null) {
+            guestImageView.setImageBitmap(guestImage);
+        }
+
+
+
         detailView.setText(guestInfo);
         btnDismiss.setOnClickListener(new Button.OnClickListener() {
 

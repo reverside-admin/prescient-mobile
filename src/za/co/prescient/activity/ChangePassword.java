@@ -60,6 +60,15 @@ public class ChangePassword extends Activity implements View.OnClickListener {
                     .getText().toString();
 
 
+            if((password.length()==0) || (confirmPassword.length()==0) )
+            {
+                Toast.makeText(getApplicationContext(), "password or confirm password can not be Empty",
+                        Toast.LENGTH_SHORT).show();
+                Log.i("password and conf password",password+":::"+confirmPassword);
+                return;
+            }
+
+
             if (password.equals(confirmPassword)) {
                 if (!confirmPassword.equalsIgnoreCase("password")) {
 

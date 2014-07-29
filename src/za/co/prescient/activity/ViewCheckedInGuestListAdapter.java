@@ -77,7 +77,6 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
 
         if (convertView == null) {
 
-            //mrunmaya
             convertView = inflater.inflate(R.layout.checked_in_guest_list_view, null);
             holder = new ViewHolder();
             holder.colFirst = (TextView) convertView.findViewById(R.id.FirstCol);
@@ -106,18 +105,23 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 try {
                     Long selectedGuestId = (Long) list.get(pos).get(ID_COLUMN);
+                    Log.i("selected guest id",selectedGuestId.toString());
+                    //Log.i("selected guest and user auth token",session.getToken());
                     //here a web service is called to get the guest current location
-                    String guestCurrentPosition = ServiceInvoker.getCurrentGuestPosition(session.getToken(), selectedGuestId);
+                     String guestCurrentPosition = ServiceInvoker.getCurrentGuestPosition(session.getToken(), selectedGuestId);
+                     Log.i("selected guest info",guestCurrentPosition);
 
-                    System.out.println("asdf:::" + guestCurrentPosition.length());
+
+                     System.out.println("asdf:::" + guestCurrentPosition.length());
                     if (guestCurrentPosition.length() == 0) {
                         String currentGuestLocationHistory = ServiceInvoker.getCurrentGuestLocationHistory(session.getToken(), selectedGuestId);
                         viewGuestLocationHistory(currentGuestLocationHistory, pos);
-                        //openDialog();
 
                     } else {
-                        viewGuestCurrentPosition(guestCurrentPosition, pos);
-                    }
+                        JSONObject jsonObject = new JSONObject(guestCurrentPosition);
+                        String currentZone = jsonObject.getString("zoneId");
+                        Toast.makeText(context, list.get(pos).get(FIRST_COLUMN) + " " + list.get(pos).get(SECOND_COLUMN) + " is Currently in " + currentZone, Toast.LENGTH_SHORT).show();
+                     }
 
 
                 } catch (Exception e) {
@@ -129,42 +133,9 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void viewGuestCurrentPosition(String guestCurrentPosition, int pos) throws Exception {
-        JSONObject jsonObject = new JSONObject(guestCurrentPosition);
-        String currentZone = jsonObject.getString("zoneId");
-
-        Toast.makeText(context, list.get(pos).get(FIRST_COLUMN) + " " + list.get(pos).get(SECOND_COLUMN) + " is Currently in " + currentZone, Toast.LENGTH_SHORT).show();
-        Log.i("current guest position data", guestCurrentPosition);
-
-
-        //show popup here
-        View popupView = inflater1.inflate(R.layout.guest_current_location_popup, null);
-        final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        popupWindow.showAtLocation(popupView, Gravity.CENTER, 10, 10);
-        popupView.setBackgroundColor(Color.BLUE);
-
-        //Button is added
-        Button dismissButton = (Button) popupView.findViewById(R.id.currentGuestLocationClose);
-        dismissButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                popupWindow.setFocusable(false);
-                popupWindow.dismiss();
-            }
-        });
-
-        TextView guestCurrentLocationText = (TextView) popupView.findViewById(R.id.currentLocationText);
-        guestCurrentLocationText.setText(list.get(pos).get(FIRST_COLUMN) + " " + list.get(pos).get(SECOND_COLUMN) + " is Currently in " + currentZone);
-
-        popupWindow.setFocusable(true);
-        popupWindow.update();
-    }
 
     public void viewGuestLocationHistory(String currentGuestLocationHistory, int pos) throws Exception {
         //show popup here
-        //Toast.makeText(context, currentGuestLocationHistory, Toast.LENGTH_SHORT).show();
 
         View popupView = inflater1.inflate(R.layout.guest_history_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, 200);

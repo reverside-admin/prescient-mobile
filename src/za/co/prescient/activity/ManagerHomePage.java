@@ -1,6 +1,8 @@
 package za.co.prescient.activity;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,11 +32,6 @@ public class ManagerHomePage extends Activity {
         setContentView(R.layout.activity_manager_home_page);
 
         String userName = this.getIntent().getStringExtra("name");
-
-
-        //getActionBar().setTitle(" Welcome ! "+userName);
-        // getActionBar().getCustomView().getLayoutParams().resolveLayoutDirection(DEFAULT_KEYS_SEARCH_GLOBAL);
-
 
         TextView tv = (TextView) findViewById(R.id.prescient_name);
         tv.setText(Html.fromHtml(getString(R.string.prescient_name)));
@@ -72,6 +69,7 @@ public class ManagerHomePage extends Activity {
             }
         });
 
+         //find guest single click
         Button findAGuest = (Button) findViewById(R.id.findAGuest);
         findAGuest.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -79,7 +77,27 @@ public class ManagerHomePage extends Activity {
                 onFindAGuestClick();
             }
         });
+
+        //notification test
+       /* Button notify=(Button)findViewById(R.id.notify);
+        notify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onNotifyClick();
+            }
+        });*/
+
+        //end of test
+
     }
+
+
+   /* public void onNotifyClick()
+    {
+        Toast.makeText(getApplicationContext(), "Notify!!!!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), NotificationCreator.class);
+        startActivity(intent);
+    }*/
 
     private void onFindAGuestClick() {
         System.out.println("Service Invoked");
