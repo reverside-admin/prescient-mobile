@@ -10,6 +10,8 @@ public class Constant {
     public static final String FOURTH_COLUMN = "Fourth";
     public static final String FIFTH_COLUMN = "Fifth";
     public static final String SIXTH_COLUMN = "Sixth";
+    public static final String SEVENTH_COLUMN = "Seventh";
+
 
     public static  Long ID_COLUMN;
 

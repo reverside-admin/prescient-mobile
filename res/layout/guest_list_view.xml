@@ -37,4 +37,28 @@
             android:text="Fourth"
             android:layout_weight="1">
     </TextView>
+
+    <!--<TextView
+            android:id="@+id/FifthText"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Fifth"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/SixthText"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Sixth"
+            android:layout_weight="1">
+    </TextView>
+
+    <TextView
+            android:id="@+id/SeventhText"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Seventh"
+            android:layout_weight="1">
+    </TextView>-->
 </LinearLayout>

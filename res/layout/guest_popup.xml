@@ -52,8 +52,10 @@
 
             <ImageView
                     android:id="@+id/guest_photo"
+                    android:src="@drawable/guest_image"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
+
                      />
 
             <TextView

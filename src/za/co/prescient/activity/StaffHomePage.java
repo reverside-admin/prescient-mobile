@@ -3,6 +3,7 @@ package za.co.prescient.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -35,13 +36,16 @@ public class StaffHomePage extends Activity {
         TextView tv = (TextView) findViewById(R.id.prescientName1);
         tv.setText(Html.fromHtml(getString(R.string.prescient_name)));
 
+        ((TextView) findViewById(R.id.application_name3)).setTextColor(Color.WHITE);
+        ((TextView) findViewById(R.id.staff_role)).setTextColor(Color.WHITE);
+
         //check session here
         session = new SessionManager(getApplicationContext());
         Log.i("check", "checking the session");
         session.checkSession();
 
         String userName = this.getIntent().getStringExtra("name");
-        ((TextView) findViewById(R.id.userName)).setText(userName);
+        //((TextView) findViewById(R.id.userName)).setText(userName);
         Log.i("name : ", userName);
         Toast.makeText(getApplicationContext(), "Welcome " + userName.toUpperCase(), Toast.LENGTH_SHORT).show();
 

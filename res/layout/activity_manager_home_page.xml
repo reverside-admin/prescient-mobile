@@ -63,6 +63,4 @@
             android:text="Find A Guest"
             android:layout_gravity="center"/>
 
-
-
 </LinearLayout>

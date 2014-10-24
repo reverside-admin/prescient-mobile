@@ -15,6 +15,7 @@
             android:gravity="center"/>
 
     <TextView
+            android:id="@+id/application_name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/guest_recognition_system"
@@ -23,9 +24,10 @@
             android:gravity="center"/>
 
     <TextView
+            android:id="@+id/role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/role_admin"
+            android:text="Admin"
             android:textSize="25sp"
             android:layout_gravity="center"
             android:gravity="center"/>
@@ -37,5 +39,28 @@
             android:textSize="15sp"
             android:layout_gravity="center"
             android:gravity="center"/>
+
+    <Button
+            android:id="@+id/findGuestInLayout"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Find Guests on Layout"
+            android:layout_gravity="center"
+            android:layout_marginTop="350px"/>
+
+
+    <Button
+            android:id="@+id/displayAllTouchPoint"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Display Guest List"
+            android:layout_gravity="center"/>
+
+    <Button
+            android:id="@+id/findAGuestInHotel"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:text="Find A Guest"
+            android:layout_gravity="center"/>
 
 </LinearLayout>

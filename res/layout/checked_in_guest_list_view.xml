@@ -55,4 +55,13 @@
     </TextView>
 
 
+    <TextView
+            android:id="@+id/SeventhCol"
+            android:layout_width="100px"
+            android:layout_height="50dp"
+            android:text="Seven"
+            android:layout_weight="1">
+    </TextView>
+
+
 </LinearLayout>

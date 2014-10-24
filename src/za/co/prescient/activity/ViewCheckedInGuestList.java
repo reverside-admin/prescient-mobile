@@ -115,7 +115,7 @@ public class ViewCheckedInGuestList extends Activity {
         tbr.addView(textView);
 
         textView = new TextView(this);
-        textView.setText("SUR NAME");
+        textView.setText("SURNAME");
         textView.setWidth(100);
         textView.setTypeface(null, Typeface.BOLD);
         textView.setTextColor(Color.WHITE);
@@ -145,6 +145,16 @@ public class ViewCheckedInGuestList extends Activity {
         textView.setTextColor(Color.WHITE);
         tbr.addView(textView);
         tbr.setBackgroundColor(Color.RED);
+
+
+//added on 15-9-2014
+        textView = new TextView(this);
+        textView.setText("DEPARTURE DATE");
+        textView.setWidth(100);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.WHITE);
+        tbr.addView(textView);
+        tbr.setBackgroundColor(Color.RED);
     }
 
     private void populateList() {
@@ -159,23 +169,41 @@ public class ViewCheckedInGuestList extends Activity {
             HashMap temp;
 
 
+            //String roomNo="";
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject obj = (JSONObject) jsonArray.get(i);
                 JSONObject guestProfileObj = obj.getJSONObject("guest");
-                JSONObject roomObj = obj.getJSONObject("room");
+
+                String roomNo="";
+                JSONArray rooms=obj.getJSONArray("rooms");
+                Log.i("rooms:: for guest no",i+"@@"+rooms);
+                for(int count=0;count<rooms.length();count++)
+                {
+                    JSONObject room=(JSONObject)rooms.get(count);
+                    String roomNumber=room.getString("roomNumber");
+                    roomNo=roomNo+","+roomNumber;
+                }
+                if(roomNo.length()>0)
+                {
+                    roomNo=roomNo.substring(1);
+                }
+                Log.i("guest roomNo",roomNo.length()+"");
+                //roomNo="test room";
 
                 String title = guestProfileObj.getString("title");
                 String firstName = guestProfileObj.getString("firstName");
                 String surName = guestProfileObj.getString("surname");
                 String preferredName = guestProfileObj.getString("preferredName");
-                String roomNo = roomObj.getString("roomNumber");
-                Date arrivalDate = new Date(obj.getLong("arrivalTime"));
-                //added now
-                Long id = obj.getLong("id");
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Date arrivalDate = new Date(obj.getLong("arrivalTime"));
+                Date departureDate=new Date(obj.getLong("departureTime"));
+
+                Long id=guestProfileObj.getLong("id");
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String arrDate = sdf.format(arrivalDate);
+                String deptDate=sdf.format(departureDate);
 
 
                 temp = new HashMap();
@@ -185,6 +213,7 @@ public class ViewCheckedInGuestList extends Activity {
                 temp.put(FOURTH_COLUMN, preferredName);
                 temp.put(FIFTH_COLUMN, roomNo);
                 temp.put(SIXTH_COLUMN, arrDate);
+                temp.put(SEVENTH_COLUMN,deptDate);
                 //added now
                 temp.put(ID_COLUMN, id);
 

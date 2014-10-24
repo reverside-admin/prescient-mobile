@@ -61,6 +61,7 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
         TextView colFourth;
         TextView colFifth;
         TextView colSixth;
+        TextView colSeventh;
 
     }
 
@@ -85,6 +86,8 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
             holder.colFourth = (TextView) convertView.findViewById(R.id.FourthCol);
             holder.colFifth = (TextView) convertView.findViewById(R.id.FifthCol);
             holder.colSixth = (TextView) convertView.findViewById(R.id.SixthCol);
+            holder.colSeventh = (TextView) convertView.findViewById(R.id.SeventhCol);
+
 
             convertView.setTag(holder);
         } else {
@@ -98,6 +101,8 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
         holder.colFourth.setText((String) map.get(FOURTH_COLUMN));
         holder.colFifth.setText((String) map.get(FIFTH_COLUMN));
         holder.colSixth.setText((String) map.get(SIXTH_COLUMN));
+        holder.colSeventh.setText((String) map.get(SEVENTH_COLUMN));
+
 
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -109,18 +114,42 @@ public class ViewCheckedInGuestListAdapter extends BaseAdapter {
                     //Log.i("selected guest and user auth token",session.getToken());
                     //here a web service is called to get the guest current location
                      String guestCurrentPosition = ServiceInvoker.getCurrentGuestPosition(session.getToken(), selectedGuestId);
-                     Log.i("selected guest info",guestCurrentPosition);
+                     Log.i("asdf::: selected guest info",guestCurrentPosition);
 
 
-                     System.out.println("asdf:::" + guestCurrentPosition.length());
-                    if (guestCurrentPosition.length() == 0) {
+                    System.out.println("asdf:::" + guestCurrentPosition.length());
+                    String currentZone="";
+                    //when current guest is not found in the touch point then service return [] string whose length is 2.
+                    //so guestCurrentPosition.length() is compared to 2 below.
+                    if (guestCurrentPosition.length() == 2) {
                         String currentGuestLocationHistory = ServiceInvoker.getCurrentGuestLocationHistory(session.getToken(), selectedGuestId);
-                        viewGuestLocationHistory(currentGuestLocationHistory, pos);
+                        Log.i("asdf:::",currentGuestLocationHistory.length()+"");
+                        if(currentGuestLocationHistory.length()==2)
+                        {
+                            Toast.makeText(context, list.get(pos).get(FIRST_COLUMN) + " " + list.get(pos).get(SECOND_COLUMN) + " Has Never Been Detected In The Hotel " , Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            viewGuestLocationHistory(currentGuestLocationHistory, pos);
+                        }
 
                     } else {
-                        JSONObject jsonObject = new JSONObject(guestCurrentPosition);
-                        String currentZone = jsonObject.getString("zoneId");
-                        Toast.makeText(context, list.get(pos).get(FIRST_COLUMN) + " " + list.get(pos).get(SECOND_COLUMN) + " is Currently in " + currentZone, Toast.LENGTH_SHORT).show();
+                        //JSONObject jsonObject = new JSONObject(guestCurrentPosition);
+
+                        JSONArray jsonArray=new JSONArray(guestCurrentPosition);
+                        for(int i=0;i<jsonArray.length();i++)
+                        {
+                            JSONObject jsonObject=(JSONObject)jsonArray.get(i);
+                            currentZone =currentZone+" , "+jsonObject.getString("zoneId");
+
+                        }
+                        currentZone=currentZone.trim();
+                        currentZone=currentZone.substring(1,currentZone.length());
+
+
+                        Log.i("current zone of selected guest::","tt");
+
+                        Toast.makeText(context, list.get(pos).get(FIRST_COLUMN) + " " + list.get(pos).get(FOURTH_COLUMN) +" "+list.get(pos).get(THIRD_COLUMN)+ " is Currently in " + currentZone, Toast.LENGTH_SHORT).show();
                      }
 
 

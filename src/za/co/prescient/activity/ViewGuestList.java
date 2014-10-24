@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import za.co.prescient.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import static za.co.prescient.activity.model.Constant.*;
@@ -115,7 +116,7 @@ public class ViewGuestList extends Activity {
         tbr.addView(textView);
 
         textView = new TextView(this);
-        textView.setText("SUR NAME");
+        textView.setText("SURNAME");
         textView.setWidth(100);
         textView.setTypeface(null, Typeface.BOLD);
         textView.setTextColor(Color.WHITE);
@@ -129,6 +130,30 @@ public class ViewGuestList extends Activity {
         textView.setTextColor(Color.WHITE);
         tbr.addView(textView);
         tbr.setBackgroundColor(Color.RED);
+
+       /* textView = new TextView(this);
+        textView.setText("ROOM NUMBER");
+        textView.setWidth(100);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.WHITE);
+        tbr.addView(textView);
+        tbr.setBackgroundColor(Color.RED);
+
+        textView = new TextView(this);
+        textView.setText("ARRIVAL DATE");
+        textView.setWidth(100);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.WHITE);
+        tbr.addView(textView);
+        tbr.setBackgroundColor(Color.RED);
+
+        textView = new TextView(this);
+        textView.setText("DEPARTURE DATE");
+        textView.setWidth(100);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.WHITE);
+        tbr.addView(textView);
+        tbr.setBackgroundColor(Color.RED);*/
     }
 
     private void populateList() {
@@ -149,11 +174,20 @@ public class ViewGuestList extends Activity {
                 String preferredName = obj.getString("preferredName");
                 Long id = obj.getLong("id");
 
+                //Date arrivalDate = new Date(obj.getLong("arrivalTime"));
+                //Date departureDate=new Date(obj.getLong("departureTime"));
+
                 temp = new HashMap();
                 temp.put(FIRST_COLUMN, title);
                 temp.put(SECOND_COLUMN, firstName);
                 temp.put(THIRD_COLUMN, surName);
                 temp.put(FOURTH_COLUMN, preferredName);
+                //temp.put(FIFTH_COLUMN, "test1");
+                //temp.put(SIXTH_COLUMN, "test2");
+                //temp.put(SEVENTH_COLUMN,"test3");
+
+
+
                 temp.put(ID_COLUMN, id);
 
                 list.add(temp);

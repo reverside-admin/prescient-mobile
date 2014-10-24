@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import za.co.prescient.R;
 
@@ -67,7 +68,9 @@ public class ViewGuestListAdapter extends BaseAdapter {
         TextView txtSecond;
         TextView txtThird;
         TextView txtFourth;
-        // TextView txtFifth;
+        //TextView txtFifth;
+        //TextView txtSixth;
+        //TextView txtSeventh;
     }
 
     @Override
@@ -90,7 +93,11 @@ public class ViewGuestListAdapter extends BaseAdapter {
             holder.txtSecond = (TextView) convertView.findViewById(R.id.SecondText);
             holder.txtThird = (TextView) convertView.findViewById(R.id.ThirdText);
             holder.txtFourth = (TextView) convertView.findViewById(R.id.FourthText);
-            // holder.txtFifth = (TextView) convertView.findViewById(R.id.FifthText);
+            //holder.txtFifth = (TextView) convertView.findViewById(R.id.FifthText);
+            //holder.txtSixth = (TextView) convertView.findViewById(R.id.SixthText);
+            //holder.txtSeventh = (TextView) convertView.findViewById(R.id.SeventhText);
+
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -101,6 +108,13 @@ public class ViewGuestListAdapter extends BaseAdapter {
         holder.txtSecond.setText((String) map.get(SECOND_COLUMN));
         holder.txtThird.setText((String) map.get(THIRD_COLUMN));
         holder.txtFourth.setText((String) map.get(FOURTH_COLUMN));
+
+        //holder.txtFifth.setText((String) map.get(FIFTH_COLUMN));
+
+        //holder.txtSixth.setText((String) map.get(SIXTH_COLUMN));
+
+        //holder.txtSeventh.setText((String) map.get(SEVENTH_COLUMN));
+
 
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -122,13 +136,14 @@ public class ViewGuestListAdapter extends BaseAdapter {
                     String guestTitle = jsonGuestDetail.getString("title");
                     String guestFirstName = jsonGuestDetail.getString("firstName");
                     String guestSurname = jsonGuestDetail.getString("surname");
+                    String guestPreferredName=jsonGuestDetail.getString("preferredName");
                     String guestNationality = jsonGuestDetail.getString("nationalityId");
                     String gender = jsonGuestDetail.getString("gender");
                     String guestImageFilePath = jsonGuestDetail.getString("guestImagePath");
                     Long DOBInLong = jsonGuestDetail.getLong("dob");
                     Date dob = new Date(DOBInLong);
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM");
                     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                     String dobText = sdf.format(dob);
 
@@ -143,23 +158,67 @@ public class ViewGuestListAdapter extends BaseAdapter {
                     Date departureDate = new Date(departureTime);
                     String departureDateText = sdf1.format(departureDate);
 
-                    JSONObject jsonGuestRoomDetail = jsonGuest.getJSONObject("room");
-                    String guestRoomNo = jsonGuestRoomDetail.getString("roomNumber");
+                    //JSONObject jsonGuestRoomDetail = jsonGuest.getJSONObject("room");
+                    //String guestRoomNo = jsonGuestRoomDetail.getString("roomNumber");
 
+                    String guestRoomNo ="";
+                    JSONArray jsonGuestRooms=jsonGuest.getJSONArray("rooms");
+                    Log.i("jsonGuestRooms::",jsonGuestRooms.toString());
+                    if(jsonGuestRooms.length()!=0)
+                    {
+
+                    for (int i=0; i<jsonGuestRooms.length(); i++){
+                        JSONObject obj=(JSONObject) jsonGuestRooms.get(i);
+                        guestRoomNo=guestRoomNo+" , "+obj.getString("roomNumber");
+
+                    }
+
+                    guestRoomNo=guestRoomNo.trim();
+                    guestRoomNo=guestRoomNo.substring(1, guestRoomNo.length());
+                    }
+
+                    //added 28-8-2014
+                    Bitmap guestImageBitmap = null;
+                    if(!guestImageFilePath.equals("null"))
+                    {
+                        String guestImageFileNameWithoutExtension = guestImageFilePath.substring(0, guestImageFilePath.lastIndexOf("."));
+                        String guestImageFileExtension = guestImageFilePath.substring(guestImageFilePath.lastIndexOf(".") + 1);
+
+
+                        String guestImage="";
+                        if(guestImageFileNameWithoutExtension.length()!=0 || guestImageFileExtension.length()!=0)
+                        {
+                            guestImage = ServiceInvoker.getGuestImage(session.getToken(), guestImageFileNameWithoutExtension.trim(), guestImageFileExtension.trim());
+                        }
+
+                        if (guestImage.length() != 0) {
+                            byte[] bytes = Base64.decode(guestImage, Base64.DEFAULT);
+                            guestImageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        }
+                    }
+                    //end of added 28-8-2014
+
+                    //If guest image is not set then popup will not appear.
 
                     //get guest image and pass the image to the popup.
+                    /*Bitmap guestImageBitmap = null;
+                    if(guestImageFilePath!=null)
+                    {
                     String guestImageFileNameWithoutExtension = guestImageFilePath.substring(0, guestImageFilePath.lastIndexOf("."));
                     String guestImageFileExtension = guestImageFilePath.substring(guestImageFilePath.lastIndexOf(".") + 1);
 
-                    Bitmap guestImageBitmap = null;
+                   // Bitmap guestImageBitmap = null;
+
                     String guestImage = ServiceInvoker.getGuestImage(session.getToken(), guestImageFileNameWithoutExtension.trim(), guestImageFileExtension.trim());
                     if (guestImage.length() != 0) {
                         byte[] bytes = Base64.decode(guestImage, Base64.DEFAULT);
                         guestImageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     }
+                    }*/
 
 
-                    String guestInfo = "\n  Name: " + guestTitle + " " + guestFirstName + " " + guestSurname + "\n  Nationality: " + guestNationality + "\n  Gender: " + gender + "\n  DOB: " + dobText + "\n  Room Number: " + guestRoomNo + "\n  Arrival Date: " + arrivalDateText + "\n  Departure Date: " + departureDateText + "\n\n";
+
+                    String guestInfo = "\n  Name: " + guestTitle + " " + guestPreferredName + " " + guestSurname + "\n  Nationality: " + guestNationality + "\n  Gender: " + gender + "\n  DOB: " + dobText + "\n  Room Number: " + guestRoomNo + "\n  Arrival Date: " + arrivalDateText + "\n  Departure Date: " + departureDateText + "\n\n";
                     showPopup(view, guestInfo, dob, departureDate, guestImageBitmap);
                 } catch (Exception e) {
                     Log.i("mistake", e.getMessage());

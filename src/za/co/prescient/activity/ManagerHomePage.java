@@ -1,9 +1,11 @@
 package za.co.prescient.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,6 +53,62 @@ public class ManagerHomePage extends Activity {
 //        Log.i("id : ", uid);
         Toast.makeText(getApplicationContext(), "Welcome " + userName.toUpperCase(), Toast.LENGTH_SHORT).show();
 
+        //add a alert here for testing purpose
+
+        //call a service to find out list of all guests whose bday is today and iterate the showDialog()
+       try{
+           Log.i("get all bday guests",".");
+          String responseData = ServiceInvoker.getGuestsWhoseBdayIsToday(session.getToken(), ApplicationData.currentUserHotelId);
+          JSONArray bdayGuests=new JSONArray(responseData);
+           Log.i("bdayguests::",bdayGuests.toString());
+           Log.i("before iff",bdayGuests.length()+"");
+
+           String message="";
+           if(bdayGuests.length()!=0)
+           {
+               Log.i("inside iff",bdayGuests.length()+"");
+               for(int i=0;i<bdayGuests.length();i++)
+               {
+                   JSONObject guestStay=bdayGuests.getJSONObject(i);
+                   JSONObject guestProfile=guestStay.getJSONObject("guest");
+
+                   String roomNo="";
+                   JSONArray rooms=guestStay.getJSONArray("rooms");
+                   Log.i("rooms:: for guest no",i+"@@"+rooms);
+                   for(int count=0;count<rooms.length();count++)
+                   {
+                       JSONObject room=(JSONObject)rooms.get(count);
+                       String roomNumber=room.getString("roomNumber");
+                       roomNo=roomNo+","+roomNumber;
+                   }
+                   if(roomNo.length()>0)
+                   {
+                       roomNo=roomNo.substring(1);
+                   }
+
+
+                   Log.i("iteration::",i+"");
+                   JSONObject guestObj=(JSONObject)bdayGuests.get(i);
+                   String title=(String)guestProfile.get("title");
+                   Log.i(" iteration title::",title+"");
+
+                   String preferredName=(String)guestProfile.get("preferredName");
+                   Log.i(" iteration preferredName::",preferredName+"");
+                   String surname=(String)guestProfile.get("surname");
+                   Log.i(" iteration surname::",surname+"");
+                   message=title+" "+preferredName+" "+surname;
+                   showDialog(message,roomNo);
+                   Log.i(" iteration dialog::",message+"");
+
+               }
+           }
+       }catch(Exception ee)
+        {
+            Log.i("Exception in ","getting guest whose bday is today");
+        }
+
+        //End of alert button
+
         //Add Listener to Button
 
         Button findGuest = (Button) findViewById(R.id.findGuest);
@@ -78,6 +136,18 @@ public class ManagerHomePage extends Activity {
             }
         });
 
+
+
+
+
+       /* Button alertButton = (Button) findViewById(R.id.alert);
+        alertButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAlertClick();
+            }
+        });*/
+
         //notification test
        /* Button notify=(Button)findViewById(R.id.notify);
         notify.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +160,14 @@ public class ManagerHomePage extends Activity {
         //end of test
 
     }
+
+
+
+    /*public void onAlertClick()
+    {
+        Intent intent = new Intent(getApplicationContext(), AlertActivity.class);
+        startActivity(intent);
+    }*/
 
 
    /* public void onNotifyClick()
@@ -230,5 +308,35 @@ public class ManagerHomePage extends Activity {
         // super.onBackPressed();
         Log.i("Back", "pressed");
 
+    }
+
+
+    //show dialog here
+    public void showDialog(String message,String roomNo)
+    {
+        Log.i("dialog","opened");
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light));
+        AlertDialog alert = dialog.create();
+
+        dialog.setTitle("Happy Birth Day");
+        dialog.setMessage("\n Wish Happy Birth Day To " + message +"\n in Room No "+roomNo+ "\n");
+        dialog.setIcon(R.drawable.bday1);
+
+
+
+        dialog.setPositiveButton("ok",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+
+        dialog.setNegativeButton("cancel",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+             }
+        });
+        dialog.show();
     }
 }
